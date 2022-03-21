@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Shortener</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome6/css/all.css" />
+
+     <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/datatables/DataTables-1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="~/lib/datatables/Responsive-2.2.9/css/responsive.bootstrap5.min.css">
+    <link rel="stylesheet" href="~/lib/datatables/Buttons-2.2.2/css/buttons.bootstrap5.min.css">
+
+    <!-- SweetAlert2 -->
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet">
+    @*<link href="~/lib/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet">*@
+    <!-- Toastr -->
+    <link href="~/lib/toastr/toastr.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="~/Shortener.styles.css" asp-append-version="true" />
+    
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Shortener</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link active" asp-action="index" asp-controller="home" aria-current="page" >Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="index" asp-controller="acortador" >Acortador</a>
+                </li>        
+            </ul>
+            @*<form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>*@
+        </div>
+    </div>
+</nav>
+
+<div class="content-wrapper" >
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+                @RenderBody()
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<footer id="footerWeb" class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2022 - Shortener - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery-3.6.0.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables  & Plugins -->
+<script src="~/lib/datatables/datatables.min.js"></script>
+<script src="~/lib/datatables/DataTables-1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="~/lib/datatables/Responsive-2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="~/lib/datatables/Responsive-2.2.9/js/responsive.bootstrap5.min.js"></script>
+<script src="~/lib/datatables/Buttons-2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="~/lib/datatables/Buttons-2.2.2/js/buttons.bootstrap5.min.js"></script>
+@*<script src="~/lib/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>*@
+@*<script src="~/lib/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+
+<script src="~/lib/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/lib/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/lib/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>*@
+<script src="~/lib/datatables/Buttons-2.2.2/js/buttons.colVis.min.js"></script>
+<script src="~/lib/datatables/sum().js"></script>
+
+<!-- SweetAlert2 -->
+<script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+<!-- Toastr -->
+<script src="~/lib/toastr/toastr.min.js"></script>
+
+    <script src="~/lib/moment/moment.min.js"></script>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

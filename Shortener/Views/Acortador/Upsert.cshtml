@@ -1,0 +1,91 @@
+﻿
+@*@{
+    Layout = null;
+}*@
+@model Shortener.Models.UrlConfigs
+<div class="row">
+    <form id="frmDatos" asp-action="Upsert" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.ID != 0)
+        {
+            <input type="hidden" asp-for="ID" />
+        }
+        <input type="hidden" asp-for="FechaCreacion" />
+        <input type="hidden" asp-for="FechaModificacion"/>
+        <input type="hidden" asp-for="NumVisitas" />
+        <div class="row">
+            <div class="col-12 mb-1">
+                <div>
+                    <label asp-for="UrlLarga" class="control-label"></label>
+                    <textarea asp-for="UrlLarga" type="text" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="UrlLarga" class="text-danger"></span>
+                </div>
+            </div>
+            @if (Model.ID != 0)
+            {
+                <div class="col-12 mb-1">
+                    <label asp-for="UrlCorta" class="control-label"></label>
+                    <input asp-for="UrlCorta" asp-format="{0:dd-MM-yyyy HH:mm}" class="form-control col-md-5" readonly/>
+                    <span asp-validation-for="UrlCorta" class="text-danger"></span>
+                </div>
+            } else
+            {
+                <input hidden asp-for="UrlCorta" value="?" />
+            }
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mb-1">
+                <div>
+                    <label asp-for="CodProducto" class="control-label"></label>
+                    <input asp-for="CodProducto" class="form-control" />               
+                    <span asp-validation-for="CodProducto" class="text-danger" ></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 mb-1">
+                <div>
+                    <label asp-for="Producto" class="control-label"></label>
+                    <input asp-for="Producto" class="form-control" />               
+                    <span asp-validation-for="Producto" class="text-danger" ></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 mb-1">
+                <div>
+                    <label asp-for="FechaExpira" class="control-label">Fecha Expiración</label>
+                    <input asp-for="FechaExpira" class="form-control"  />               
+                    <span asp-validation-for="FechaExpira" class="text-danger" ></span>
+                </div>
+            </div>            
+            
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 align-self-end mb-2">
+                <div class="form-check">
+                    <label class="form-check-label">                        
+                        @if (Model.Habilitado || Model.ID == 0)
+                        {
+                            <input class="form-check-input" asp-for="Habilitado" checked /> @Html.DisplayNameFor(model => model.Habilitado)
+                        } else
+                        {                            
+                            <input class="form-check-input" asp-for="Habilitado" /> @Html.DisplayNameFor(model => model.Habilitado)    
+                        } 
+                        
+                        
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        @if (Model.ID != 0)
+        {
+            <partial name="_BotonesActualizarRegresar" model="Model.ID"></partial>
+        } 
+        else 
+        {                   
+            <partial name="_BotonesCrearRegresar"></partial>
+        }
+        </div>
+    </form>
+
+</div>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,97 @@
+﻿@model Shortener.Models.UrlConfigs
+<!--
+<h4>UrlClass</h4>
+<hr />
+-->
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" id="frm_nuevo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UrlLarga" class="control-label"></label>
+                <input asp-for="UrlLarga" class="form-control col-md-12" value=""/>                
+                <span asp-validation-for="UrlLarga" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="UrlCorta" class="control-label"></label>
+                <input asp-for="UrlCorta" class="form-control col-md-5" value="" readonly />
+                <span asp-validation-for="UrlCorta" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group" style="display:none;">
+                <label asp-for="FechaCreacion" class="control-label"></label>
+                <input asp-for="FechaCreacion" class="form-control" value="@String.Format("{0:dd/MM/yyyy}", DateTime.Now)" /> 
+                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="FechaExpira" class="control-label">Fecha Expiración</label>
+                <input asp-for="FechaExpira" class="form-control col-md-4" value="@String.Format("{0:dd/MM/yyyy}", DateTime.Now)" />               
+                <span asp-validation-for="FechaExpira" class="text-danger" ></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Habilitado" checked /> @Html.DisplayNameFor(model => model.Habilitado)
+                </label>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="NumVisitas" class="control-label"></label>
+                <input asp-for="NumVisitas" class="form-control col-md-4" value="0" />
+                <span asp-validation-for="NumVisitas" class="text-danger"></span>
+            </div>
+            <!--
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            -->   
+            <div class="alert alert-danger" id="divMsgErrSave" hidden>
+                <strong>Error!</strong> Indicates a dangerous or potentially negative action.
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <input type="submit" value="Acortar" id="btn_guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<!--
+<div>
+    <a asp-action="Index">Back to List</a>
+</di>
+-->
+    <script>
+        $("#frm_nuevo").submit(function (e) {
+        e.preventDefault();
+        data = $('#frm_nuevo').serializeArray();
+        $.ajax({
+            url: "@Url.Action("Upsert", "Acortador")", // Url
+            data: data,
+            type: "post"  // Verbo HTTP
+        })
+        // Se ejecuta si todo fue bien.
+            .done(function (result) {
+                debugger;
+            if (result.success) {                                
+                $("#ventana_modal").modal("hide");
+            }
+            else {
+                $("#divMsgErrSave").html("<strong>Error!</strong> Se produjo un error al realizar la consulta: " + result.message);
+                $('#divMsgErrSave').removeAttr('hidden');
+                
+                console.log(result);                
+            }
+        })
+        // Se ejecuta si se produjo un error.
+        .fail(function (xhr, status, error) {
+            $("#divMsgErrSave").html("<strong>Error!</strong> Se produjo un error al realizar la consulta.");
+            $('#divMsgErrSave').removeAttr('hidden');
+            console.log(error);
+        })
+        // Hacer algo siempre, haya sido exitosa o no.
+        .always(function (x) {
+            console.log(x);
+        });
+    });
+    </script>
+     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

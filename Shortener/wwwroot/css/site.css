@@ -1,0 +1,25 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Show it is fixed to the top */
+body {
+    min-height: calc(100vh - 7rem);
+    padding-top: 4.5rem;
+}
+.field-validation-error {
+    font-size: 0.7em;
+    white-space: pre-wrap;
+    line-height: 0.5;
+}
