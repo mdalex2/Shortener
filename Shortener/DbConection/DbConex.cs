@@ -9,6 +9,13 @@ namespace Shortener.DbConection
         {
 
         }
-        public DbSet<UrlConfigs> UrlConfigs { get; set; }
+        public DbSet<UrlShort> UrlShorts { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UrlShort>()
+                .HasIndex(u => u.UrlCorta)
+                .IsUnique();
+
+        }
     }
 }

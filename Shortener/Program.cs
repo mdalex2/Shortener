@@ -1,7 +1,19 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Shortener.DbConection;
+using Microsoft.AspNetCore.Authentication.Negotiate;
 
 var builder = WebApplication.CreateBuilder(args);
+//agrego autenticación de windows
+//Microsoft.AspNetCore.Authentication.Negotiate (nugget)
+//builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
+//   .AddNegotiate();
+
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.FallbackPolicy = options.DefaultPolicy;
+//});
+// hasta aqui
 
 var connectionString = builder.Configuration.GetConnectionString("Shortener");
 builder.Services.AddDbContext<DbConex>(options =>
@@ -25,10 +37,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//app.UseAuthentication(); //para authenticación windows o cualquier otra
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

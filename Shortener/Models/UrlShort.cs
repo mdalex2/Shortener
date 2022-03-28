@@ -1,18 +1,19 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shortener.Models 
 {  
-    public class UrlConfigs
+    public class UrlShort
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Display(Name = "URL Larga")]
         [MaxLength(3000)]
         [Required(ErrorMessage = "Debe ingresar una url válida.")]
-        public string? UrlLarga { get; set; }
+        public string UrlLarga { get; set; }
 
         [MaxLength(10)]
         [DisplayName("Shortener")]
@@ -51,7 +52,8 @@ namespace Shortener.Models
 
         [MaxLength(300)]
         public string? Observaciones { get; set; }
-        public string UrlChunk => WebEncoders.Base64UrlEncode(BitConverter.GetBytes(ID));
-        
+        public bool Eliminado { get; set; }
+        // public string UrlChunk => WebEncoders.Base64UrlEncode(BitConverter.GetBytes(Id));
+
     }
 }

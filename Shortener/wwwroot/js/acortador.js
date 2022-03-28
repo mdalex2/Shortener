@@ -20,10 +20,6 @@ $("#btnLimpiarFiltro").click(function () {
     loadDataTable();
 });
 
-//$("#btnSave").click(function () {
-//    alert("Clic");
-   
-//});
 
 function Edit(urlUpsert)
 {    
@@ -32,6 +28,20 @@ function Edit(urlUpsert)
         $("#ventana_modal_title").text("Acortar URL");
     });
 }
+
+function VerQR(urlVerQR) {
+    $("#ventana_modal_lg_body").load(urlVerQR, function () {
+        $("#ventana_modal_lg").modal("show");
+       
+    });
+}
+function VerQRSvg(urlVerQR) {
+    $("#ventana_modal_lg_body").load(urlVerQR, function () {
+        $("#ventana_modal_lg").modal("show");
+       
+    });
+}
+
 
 //function Save()
 //{
@@ -65,7 +75,6 @@ $(document).ready(function ()
 
 function loadDataTable() {
     let filtro = $("#txtFiltro").val();
-    debugger;
     $("#tblDatos").dataTable().fnDestroy();
     dataTable = $("#tblDatos").DataTable({
         "ajax": {
@@ -75,7 +84,7 @@ function loadDataTable() {
                 // Message also does not show here
                 console.log(error);
             }
-        },
+        },        
         "bPaginate": false,
         "bFilter": false,
         "bInfo": false,
@@ -84,19 +93,27 @@ function loadDataTable() {
         "language": {
             "url": "/lib/datatables/es_es.json"
         },
+        "columnDefs": [
+            { "visible": false, "targets": [0], "searchable": false },
+        ],
         "columns": [
+            { "data": "id", "width": "0%" },
             { "data": "codProducto", "width": "1%" },
-            { "data": "urlLarga", "width": "10%" },
-            
             {
                 "data": "urlCorta",
                 "render": function (data) {
-                    let url = serverUrl + data;                    
-                    return `<a href="${url}" target="_blank">${url}</a>`;
+                    let url = serverUrl + data;
+                    return `<a href="${url}" target="_blank" title="${url}"><div style="white-space: nowrap;  width:70px;  overflow: hidden;  text-overflow: ellipsis;">${data}</div></a>`;
                 },
-                "width": "0%"
+                "width": "1%"
             },
-            //{ "data": "urlCorta", "width": "0%" },
+            {
+                "data": "urlLarga",
+                "render": function (data) {
+                    return `<a href="${data}" target="_blank" title=${data}><div style="white-space: nowrap;  width:450px;  overflow: hidden;  text-overflow: ellipsis;">${data}</div></a>`;
+                },
+                "width": "5%"
+            },            
             {
                 "data": "fechaModificacion",
                 "render": function (data) {
@@ -127,15 +144,22 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                        <div class="text-center">
+                        <div class="row" style="width:160px;"><div class="text-center">
+                            <a href="#" onclick=VerQRSvg("/Acortador/QrImagenSvg/${data}") class="btn bg-gradient btn-secondary"><i class="fas fa-qrcode" title="Ver QR"></i></a>
                             <a href="#" onclick=Edit("/Acortador/Upsert/${data}") class="btn bg-gradient btn-primary text-white"><i class="fas fa-edit"></i></a>
                             <a href="#" onclick=Delete("/Acortador/Delete/${data}") class="btn bg-gradient btn-danger text-white"><i class="fas fa-trash-alt"></i></a>
-                        </div>
+                        </div></div>
                     `;
-                }, "width": "1%"
+                }, "width": "0%"
             }
         ]
     });
+
+    $('table td').each(function () {
+        var step = 5; $td = $(this);
+        $td.width(10 + (step * $td.index()));
+    });
+
 }
 
 function Delete(url) {
@@ -164,6 +188,3 @@ function Delete(url) {
         }
     });
 }
-
-
-

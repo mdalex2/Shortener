@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Shortener.Models.UrlConfigs>
+﻿@model IEnumerable<Shortener.Models.UrlShort>
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration _config
 @{
     ViewData["Title"] = "Acortador";
 }
 <div class="content">
+    <img src="" style="border 1px solid #00"/>
 <nav class="navbar text-right" style="display:block;">
     <div class="container-fluid">
         <div class="row col-xs-12 g-2 align-items-center mb-2">
@@ -38,13 +39,16 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.CodProducto)
+            </th>                        
+            <th>
+                @Html.DisplayNameFor(model => model.UrlCorta)
             </th>
             <th>
                 <p style="text-wrap:inherit;word-wrap: break-word!important;overflow:hidden;">@Html.DisplayNameFor(model => model.UrlLarga)</p>
-            </th>            
-            <th>
-                @Html.DisplayNameFor(model => model.UrlCorta)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaModificacion)
@@ -84,12 +88,30 @@
     </div>
 
 </div>
+<div class="modal" id="ventana_modal_lg" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="ventana_modal_lg_title" class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="ventana_modal_lg_body" class="modal-body">
+                
+            </div>
+            <div hidden id="ventana_modal_lg_footer" class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 @section Scripts{
-    <script type="text/javascript">        
-        var urlUpsert = "@Url.Action("Upsert", "Acortador")";
-        var serverUrl = "@_config.GetSection("ServerShortener").Value.ToString()";
-        debugger;
+    <script type="text/javascript">
+        var urlVerQR = "@Url.Action("QrImagenBase64", "Acortador")";
+        var urlUpsert = "@Url.Action("Upsert", "Acortador")";        
+        var serverUrl = "@_config.GetSection("ServidorShortener").Value.ToString()";
     </script>
     <script src="@Url.Content("~/js/acortador.js")"></script>
 }

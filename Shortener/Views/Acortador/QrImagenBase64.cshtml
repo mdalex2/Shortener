@@ -1,0 +1,17 @@
+﻿@model UrlShort
+@{
+    Layout = null;
+    ViewData["Title"] = "Qr Code: ";
+    string fileName = Model.UrlCorta + ".svg";
+}
+<div class="text-center img-responsive">         
+    @*<img alt="Embedded QR Code" class="img-responsive" src="data:image/png;base64,@Model" style="height: calc(100vh - 150px)" />*@
+    <img class="img-responsive" src="~/Images/QR/@fileName" style="height: calc(100vh - 250px)" />
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        let urlWeb = "@ViewBag.fullUrl";
+         $("#ventana_modal_lg_title").html("Código Web QR: <a href=\"@ViewBag.fullUrl\" target=\"_blank\" >" + urlWeb + "</a>");
+    });
+</script>
