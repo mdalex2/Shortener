@@ -1,4 +1,8 @@
-﻿USE Shortener
+﻿DROP database if exists shortener 
+GO
+Create database Shortener;
+GO
+USE Shortener
 drop table if exists UrlShorts
 CREATE TABLE UrlShorts
 (
